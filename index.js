@@ -1,8 +1,10 @@
 import express from "express";
 import { Sequelize, DataTypes } from "sequelize";
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 const sequelize = new Sequelize(
 	"postgresql://postgres:YHOQvlrzfJxsFjDJeTdtkfSIAHpqPrNM@autorack.proxy.rlwy.net:45410/railway"
@@ -47,6 +49,7 @@ app.get("/reservas", async (req, res) => {
 });
 
 app.post("/reservas", async (req, res) => {
+	console.log(req.body);
 	const reserva = await Reserva.create({
 		cliente: req.body.cliente,
 		habitacion: req.body.habitacion,

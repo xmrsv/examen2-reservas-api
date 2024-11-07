@@ -102,13 +102,8 @@ app.put("/reservas/:id", async (req, res) => {
 });
 
 app.delete("/reservas/:id", async (req, res) => {
-
-	if (req.params.id === null) {
-		return res.send("Id is required").status(400);
-	}
-
 	if (await Reserva.findOne({ where: { id: req.params.id } }) === null) {
-		return res.send("Not found").status(404);
+		return res.status(404).send("Not found");
 	}
 
 	const deleted = await Reserva.destroy({
@@ -118,9 +113,9 @@ app.delete("/reservas/:id", async (req, res) => {
 	});
 
 	if (deleted >= 1) {
-		res.send("Reservation deleted").status(204);
+		res.status(204);
 	} else {
-		res.send("Couldn't delete reservation").status(500);
+		res.status(500).send("Couldn't delete reservation");
 	}
 });
 

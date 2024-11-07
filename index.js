@@ -3,8 +3,11 @@ import { Sequelize, DataTypes } from "sequelize";
 import cors from "cors";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 app.use(express.json());
 app.use(cors());
+
 
 const sequelize = new Sequelize(
 	"postgresql://postgres:YHOQvlrzfJxsFjDJeTdtkfSIAHpqPrNM@autorack.proxy.rlwy.net:45410/railway"
@@ -51,7 +54,7 @@ app.get("/reservas", async (req, res) => {
 app.post("/reservas", async (req, res) => {
 	console.log(req.body);
 	const reserva = await Reserva.create({
-		cliente: req.body.cliente,
+		cliente: req.body.cliente.trim(),
 		habitacion: req.body.habitacion,
 		fecha_entrada: req.body.fecha_entrada,
 		fecha_salida: req.body.fecha_salida,
@@ -70,7 +73,7 @@ app.put("/reservas/:id", async (req, res) => {
 
 	const reservaActualizada = await Reserva.update(
 		{
-			cliente: req.body.cliente === null ? reserva.cliente : req.body.cliente,
+			cliente: req.body.cliente === null ? reserva.cliente : req.body.cliente.trim(),
 			habitacion:
 				req.body.habitacion === null ? reserva.habitacion : req.body.habitacion,
 			fecha_entrada:
@@ -92,13 +95,22 @@ app.put("/reservas/:id", async (req, res) => {
 	);
 
 	if (reservaActualizada >= 1) {
-		res.send("Reserva actualizada").status(200);
+		res.send("Reservation updated").status(200);
 	} else {
-		res.send("no se actualizo la reserva").status(500);
+		res.send("Couldn't update reservation").status(500);
 	}
 });
 
 app.delete("/reservas/:id", async (req, res) => {
+
+	if (req.params.id === null) {
+		return res.send("Id is required").status(400);
+	}
+
+	if (await Reserva.findOne({ where: { id: req.params.id } }) === null) {
+		return res.send("Not found").status(404);
+	}
+
 	const deleted = await Reserva.destroy({
 		where: {
 			id: req.params.id,
@@ -106,12 +118,12 @@ app.delete("/reservas/:id", async (req, res) => {
 	});
 
 	if (deleted >= 1) {
-		res.send("Reserva eliminada").status(200);
+		res.send("Reservation deleted").status(204);
 	} else {
-		res.send("no se elimino la reserva").status(500);
+		res.send("Couldn't delete reservation").status(500);
 	}
 });
 
-app.listen(process.env.PORT || 3000, () => {
-	console.log("Server is running on port 3000");
+app.listen(PORT, () => {
+	console.log(`Server is running on port ${PORT}`);
 });

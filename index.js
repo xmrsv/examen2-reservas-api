@@ -50,7 +50,7 @@ try {
 }
 
 app.get("/reservas", async (req, res) => {
-	res.send(await Reserva.findAll());
+	res.status(200).send(await Reserva.findAll());
 });
 
 app.post("/reservas", async (req, res) => {
@@ -97,9 +97,9 @@ app.put("/reservas/:id", async (req, res) => {
 	);
 
 	if (reservaActualizada >= 1) {
-		res.send("Reservation updated").status(200);
+		res.status(200).send("Reservation updated");
 	} else {
-		res.send("Couldn't update reservation").status(500);
+		res.status(500).send("Couldn't update reservation");
 	}
 });
 

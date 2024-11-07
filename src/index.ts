@@ -3,9 +3,12 @@ import cors from "cors";
 import { Sequelize } from "sequelize";
 import { initModels } from "./model/initModels";
 import { getAllReservas, createReserva, updateReserva, deleteReserva } from "./controllers/reserva.controller";
+import dotenv from "dotenv";
 
 const app: express.Application = express();
 const PORT: string | number = process.env.PORT || 3000;
+
+dotenv.config();
 
 app.use(express.json());
 app.use(cors());

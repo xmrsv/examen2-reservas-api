@@ -1,1 +1,8 @@
+# Node packages (not needed, becaause it will install on the server)
 node_modules
+
+# Build files
+dist
+
+# Environment variables
+.env

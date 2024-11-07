@@ -22,13 +22,15 @@ const Reserva = sequelize.define("reserva", {
 		type: DataTypes.INTEGER,
 		allowNull: false,
 	},
-	fecha_entrada: {
+	fechaEntrada: {
 		type: DataTypes.DATE,
 		allowNull: false,
+		field: "fecha_entrada",
 	},
-	fecha_salida: {
+	fechaSalida: {
 		type: DataTypes.DATE,
 		allowNull: false,
+		field: "fecha_salida",
 	},
 	costo: {
 		type: DataTypes.DOUBLE,
@@ -56,8 +58,8 @@ app.post("/reservas", async (req, res) => {
 	const reserva = await Reserva.create({
 		cliente: req.body.cliente.trim(),
 		habitacion: req.body.habitacion,
-		fecha_entrada: req.body.fecha_entrada,
-		fecha_salida: req.body.fecha_salida,
+		fechaEntrada: req.body.fecha_entrada,
+		fechaSalida: req.body.fecha_salida,
 		costo: req.body.costo,
 		estado: req.body.estado,
 	});
@@ -76,13 +78,13 @@ app.put("/reservas/:id", async (req, res) => {
 			cliente: req.body.cliente === null ? reserva.cliente : req.body.cliente.trim(),
 			habitacion:
 				req.body.habitacion === null ? reserva.habitacion : req.body.habitacion,
-			fecha_entrada:
+			fechaEntrada:
 				req.body.fecha_entrada === null
-					? reserva.fecha_entrada
+					? reserva.fechaEntrada
 					: req.body.fecha_entrada,
-			fecha_salida:
+			fechaSalida:
 				req.body.fecha_salida === null
-					? reserva.fecha_salida
+					? reserva.fechaSalida
 					: req.body.fecha_salida,
 			costo: req.body.costo === null ? reserva.costo : req.body.costo,
 			estado: req.body.estado === null ? reserva.estado : req.body.estado,

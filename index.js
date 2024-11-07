@@ -63,7 +63,7 @@ app.post("/reservas", async (req, res) => {
 		costo: req.body.costo,
 		estado: req.body.estado,
 	});
-	return res.send(reserva).status(201);
+	return res.status(201).send(reserva);
 });
 
 app.put("/reservas/:id", async (req, res) => {

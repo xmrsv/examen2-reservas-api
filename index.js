@@ -52,7 +52,6 @@ app.get("/reservas", async (req, res) => {
 });
 
 app.post("/reservas", async (req, res) => {
-	console.log(req.body);
 	const reserva = await Reserva.create({
 		cliente: req.body.cliente.trim(),
 		habitacion: req.body.habitacion,
@@ -95,9 +94,9 @@ app.put("/reservas/:id", async (req, res) => {
 	);
 
 	if (reservaActualizada >= 1) {
-		res.status(200).send("Reservation updated");
+		return res.status(200).send("Reservation updated");
 	} else {
-		res.status(500).send("Couldn't update reservation");
+		return res.status(500).send("Couldn't update reservation");
 	}
 });
 
@@ -113,9 +112,9 @@ app.delete("/reservas/:id", async (req, res) => {
 	});
 
 	if (deleted >= 1) {
-		res.status(204);
+		return res.status(204);
 	} else {
-		res.status(500).send("Couldn't delete reservation");
+		return res.status(500).send("Couldn't delete reservation");
 	}
 });
 

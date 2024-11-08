@@ -1,33 +1,29 @@
 import { Sequelize, DataTypes } from "sequelize";
 
-const tableName: string = "reservas";
+const tableName: string = "matriculas";
 
-export const defineReservaModel = (sequelize: Sequelize) => {
+export const defineMatriculaModel = (sequelize: Sequelize) => {
 	return sequelize.define(
 		tableName,
 		{
-			cliente: {
+			curso: {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			habitacion: {
+			estudiante: {
 				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			fecha_entrada: {
-				type: DataTypes.DATE,
+			horas: {
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
-			fecha_salida: {
-				type: DataTypes.DATE,
-				allowNull: false,
-			},
-			costo: {
-				type: DataTypes.FLOAT,
+			creditos: {
+				type: DataTypes.STRING,
 				allowNull: false,
 			},
 			estado: {
-				type: DataTypes.STRING,
+				type: DataTypes.ENUM("activo", "inactivo"),
 				allowNull: false,
 			},
 		},
